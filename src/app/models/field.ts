@@ -4,15 +4,18 @@ import { MultiSelectItem } from 'primeng/multiselect';
 
 export class Field<T>{
 
-    value: T;
+    value: string;
     type: FieldType;
     label: string;
+    required?: boolean;
     options?: SelectItem[]
 
-    constructor(value: T, type: FieldType, label: string, options: string[] = []) {
+
+    constructor(value: string, type: FieldType, label: string, required: boolean = false, options: string[] = []) {
         this.value = value;
         this.type = type;
         this.label = label;
+        this.required = required;
         this.options = [];
         if (options.length > 0) {
             this.options = options.map(o => ({ label: o, value: o }) as SelectItem)

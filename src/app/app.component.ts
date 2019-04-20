@@ -17,18 +17,37 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
 
-    console.log(this.skillModel);
     var controls = {};
-    this.skillKeys.forEach(k => controls[k] = new FormControl("", Validators.required));
+    this.skillKeys.forEach(k => controls[k] =
+      this.skillModel[k].required
+        ? new FormControl(this.skillModel[k].value, Validators.required)
+        : new FormControl(this.skillModel[k].value)
+    );
     this.skillForm = new FormGroup(controls);
 
   }
 
   public onSubmit() {
     if (this.skillForm.valid) {
-      console.log("Form Submitted!");
-      console.log(this.skillForm.value);
+      var file = new Blob([JSON.stringify(this.skillForm.value, null, 2)], { type: "application/json" });
+
+      var a = document.createElement("a"),
+        url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = this.skillForm.value['name'].replace(/ /g, '');
+      document.body.appendChild(a);
+      a.click();
+
+      setTimeout(function () {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+
       this.skillForm.reset();
     }
+  }
+
+  public isRequired(key: string): boolean {
+    return this.skillForm.get(key).hasError('required') && this.skillForm.get(key).touched;
   }
 }

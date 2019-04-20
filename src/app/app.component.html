@@ -6,14 +6,23 @@
         <div class="p-grid">
           <form class="form-inline" [formGroup]="skillForm" (ngSubmit)="onSubmit()">
             <ng-container *ngFor="let key of skillKeys">
+
               <div class="p-col-2">
                 <label [for]="key">{{skillModel[key].label}}</label>
               </div>
+
               <div class="p-col-10">
-                <input *ngIf="skillModel[key].type === FieldType.Text" type="text" [formControlName]="key" pInputText size="100" />
+
+                <input *ngIf="skillModel[key].type === FieldType.Text" type="text" [formControlName]="key" pInputText />
+
                 <p-spinner *ngIf="skillModel[key].type === FieldType.Numeral" [formControlName]="key"></p-spinner>
-                <p-multiSelect *ngIf="skillModel[key].type === FieldType.Array" [options]="skillModel[key].options" [formControlName]="key"></p-multiSelect>
+
+                <p-multiSelect *ngIf="skillModel[key].type === FieldType.Array" [options]="skillModel[key].options"
+                  [formControlName]="key">
+                </p-multiSelect>
+
               </div>
+
             </ng-container>
 
             <button type="submit" class="btn btn-primary">Submit</button>
