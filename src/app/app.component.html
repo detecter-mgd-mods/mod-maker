@@ -13,11 +13,11 @@
 
               <div class="p-col-10">
 
-                <input *ngIf="skillModel[key].type === FieldType.Text" type="text" [formControlName]="key" pInputText />
+                <input class="width-500" *ngIf="skillModel[key].type === FieldType.Text" type="text" [formControlName]="key" pInputText />
 
-                <p-spinner *ngIf="skillModel[key].type === FieldType.Numeral" [formControlName]="key"></p-spinner>
+                <p-spinner class="width-300" *ngIf="skillModel[key].type === FieldType.Numeral" [formControlName]="key"></p-spinner>
 
-                <p-multiSelect *ngIf="skillModel[key].type === FieldType.Array" [options]="skillModel[key].options"
+                <p-multiSelect class="width-500" *ngIf="skillModel[key].type === FieldType.Array" [options]="skillModel[key].options"
                   [formControlName]="key">
                 </p-multiSelect>
 
@@ -33,7 +33,7 @@
 
       <p-tabPanel header="Monster">
 
-
+        To be developed...
 
       </p-tabPanel>
 

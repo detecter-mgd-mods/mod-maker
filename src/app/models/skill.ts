@@ -4,7 +4,8 @@ import { FieldType } from '../enums/fieldType';
 export class Skill {
 
     public static readonly DefaultStances: string[] = ["", "Any", "Making Out", "Sex", "Anal", "Blowjob", "Titfuck", "Face Sit", "Footjob", "Breast Smother", "Slimed 100%", "Slimed 50%", "Slimed", "Tailjob"];
-
+    public static readonly DefaultStatusEffects: string[] = ["None", "Restrain", "Sleep", "Charm"]
+    public static readonly DefaultFetishTags: string[] = ["", "Breasts", "Ass", "HypnosisAddict", "Sex", "Monstrous", "Cock", "Kissing", "Feet", "Penetration"]
 
     "name": Field<string> = new Field("", FieldType.Text, "Name", true);
     "cost": Field<string> = new Field("0", FieldType.Numeral, "Cost");
@@ -15,16 +16,16 @@ export class Skill {
     "statType": Field<string> = new Field("", FieldType.Text, "Stat Type");
     "requiredStat": Field<string> = new Field("0", FieldType.Numeral, "Required Stat");
     "skillTags": Field<string[]> = new Field("", FieldType.Array, "Skill Tags", false, ["", "displayPain", "displayMagic", "displaySeduction", "displayMouth", "displayBreasts", "displayAss", "displayPenetration"]);
-    "fetishTags": Field<string[]> = new Field("", FieldType.Array, "Fetish Tags");
+    "fetishTags": Field<string[]> = new Field("", FieldType.Array, "Fetish Tags", false, Skill.DefaultFetishTags);
     "startsStance": Field<string> = new Field("", FieldType.Text, "Starts Stance");
-    "requiresStance": Field<string> = new Field("Any", FieldType.Text, "Requires Stance");
+    "requiresStance": Field<string> = new Field("", FieldType.Text, "Requires Stance");
     "unusableIfStance": Field<string[]> = new Field("", FieldType.Array, "Unusable If Stance", false, Skill.DefaultStances);
-    "requiresTargetStance": Field<string[]> = new Field("Any", FieldType.Array, "Requires Target Stance", false, Skill.DefaultStances);
-    "unusableIfTarget": Field<string[]> = new Field("", FieldType.Array, "Unusable If Target");
+    "requiresTargetStance": Field<string[]> = new Field("", FieldType.Array, "Requires Target Stance", false, Skill.DefaultStances);
+    "unusableIfTarget": Field<string[]> = new Field("", FieldType.Array, "Unusable If Target", false, Skill.DefaultStances);
     "removesStance": Field<string> = new Field("None", FieldType.Text, "Removes Stance");
     "requiresStatusEffect": Field<string> = new Field("None", FieldType.Text, "Requires Status Effect");
     "requiresStatusPotency": Field<string> = new Field("0", FieldType.Numeral, "Requires Status Potency");
-    "unusableIfStatusEffect": Field<string[]> = new Field("None", FieldType.Array, "Unusable If Status Effect");
+    "unusableIfStatusEffect": Field<string[]> = new Field("", FieldType.Array, "Unusable If Status Effect", false, Skill.DefaultStatusEffects);
     "power": Field<string> = new Field("10", FieldType.Numeral, "Power");
     "minRange": Field<string> = new Field("100", FieldType.Numeral, "Min Range");
     "maxRange": Field<string> = new Field("100", FieldType.Numeral, "Max Range");

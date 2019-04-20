@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Skill } from './models/skill';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { FieldType } from './enums/fieldType';
 
 @Component({
@@ -42,9 +42,27 @@ export class AppComponent implements OnInit {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       }, 0);
-
-      this.skillForm.reset();
     }
+    else {
+      this.getFormValidationErrors();
+    }
+  }
+
+  public getFormValidationErrors() {
+
+    Object.keys(this.skillForm.controls).forEach(key => {
+
+      const controlErrors: ValidationErrors = this.skillForm.get(key).errors;
+      if (controlErrors != null) {
+
+        Object.keys(controlErrors).forEach(keyError => {
+          alert("The property " + "'" + key + "'" + ' is ' + keyError);
+          return;
+        });
+
+      }
+    });
+
   }
 
   public isRequired(key: string): boolean {

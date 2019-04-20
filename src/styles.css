@@ -1,3 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
+
+
+.width-500{
+    width: 500px !important;
+}
+
+.width-300{
+    width: 300px !important;
+}
