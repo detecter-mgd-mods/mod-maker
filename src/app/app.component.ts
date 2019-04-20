@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
 
+    console.log(this.skillModel);
     var controls = {};
     this.skillKeys.forEach(k => controls[k] = new FormControl("", Validators.required));
     this.skillForm = new FormGroup(controls);

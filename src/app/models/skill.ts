@@ -10,11 +10,11 @@ export class Skill {
     "skillType": Field<string> = new Field("attack", FieldType.Text, "Skill Type");
     "statType": Field<string> = new Field("", FieldType.Text, "Stat Type");
     "requiredStat": Field<string> = new Field("0", FieldType.Numeral, "Required Stat");
-    "skillTags": Field<string[]> = new Field([""], FieldType.Array, "Skill Tags");
+    "skillTags": Field<string[]> = new Field([""], FieldType.Array, "Skill Tags", ["displayPain", "displayMagic", "displaySeduction", "displayMouth", "displayBreasts", "displayAss", "displayPenetration"]);
     "fetishTags": Field<string[]> = new Field([""], FieldType.Array, "Fetish Tags");
     "startsStance": Field<string> = new Field("", FieldType.Text, "Starts Stance");
     "requiresStance": Field<string> = new Field("Any", FieldType.Text, "Requires Stance");
-    "unusableIfStance": Field<string[]> = new Field([""], FieldType.Array, "Unusable If Stance");
+    "unusableIfStance": Field<string[]> = new Field([""], FieldType.Array, "Unusable If Stance", ["Making Out", "Sex", "Anal", "Blowjob", "Titfuck", "Face Sit", "Footjob", "Breast Smother", "Slimed 100%", "Slimed 50%", "Slimed", "Tailjob"]);
     "requiresTargetStance": Field<string[]> = new Field(["Any"], FieldType.Array, "Requires Target Stance");
     "unusableIfTarget": Field<string[]> = new Field([""], FieldType.Array, "Unusable If Target");
     "removesStance": Field<string> = new Field("None", FieldType.Text, "Removes Stance");

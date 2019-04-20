@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
 import { SpinnerModule } from 'primeng/spinner';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SpinnerModule } from 'primeng/spinner';
     ReactiveFormsModule,
     InputTextModule,
     TabViewModule,
-    SpinnerModule
+    SpinnerModule,
+    MultiSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
