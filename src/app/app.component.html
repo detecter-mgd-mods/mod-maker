@@ -11,13 +11,16 @@
                 <label [for]="key">{{skillModel[key].label}}</label>
               </div>
 
-              <div class="p-col-10">
+              <div class="p-col-4">
 
-                <input class="width-500" *ngIf="skillModel[key].type === FieldType.Text" type="text" [formControlName]="key" pInputText />
+                <textarea class="width-500" *ngIf="skillModel[key].type === FieldType.Text" [rows]="5" [cols]="30"
+                  pInputTextarea autoResize="autoResize" [formControlName]="key"></textarea>
 
-                <p-spinner class="width-300" *ngIf="skillModel[key].type === FieldType.Numeral" [formControlName]="key"></p-spinner>
+                <p-spinner class="width-300" *ngIf="skillModel[key].type === FieldType.Numeral" [formControlName]="key">
+                </p-spinner>
 
-                <p-multiSelect class="width-500" *ngIf="skillModel[key].type === FieldType.Array" [options]="skillModel[key].options"
+                <p-multiSelect class="width-500" *ngIf="skillModel[key].type === FieldType.Array"
+                  [options]="skillModel[key].options" [filter]="false" [readonly]="false" maxSelectedLabels="999"
                   [formControlName]="key">
                 </p-multiSelect>
 
@@ -25,7 +28,14 @@
 
             </ng-container>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="p-col-12">
+              <div class="p-grid p-justify-center">
+                <div class="p-col-2">
+                  <button type="submit" class="btn btn-primary width-200">Submit</button>
+                </div>
+              </div>
+            </div>
+
           </form>
         </div>
 
@@ -40,6 +50,5 @@
     </p-tabView>
   </div>
 </div>
-
 
 <router-outlet></router-outlet>

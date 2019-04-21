@@ -28,4 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Dev Commands
 ng build --prod --base-href=https://detecter-mgd-mods.github.io/mod-maker/
+
 npx ngh --dir=dist/mod-maker

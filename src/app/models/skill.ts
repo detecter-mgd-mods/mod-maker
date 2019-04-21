@@ -3,19 +3,21 @@ import { FieldType } from '../enums/fieldType';
 
 export class Skill {
 
-    public static readonly DefaultStances: string[] = ["", "Any", "Making Out", "Sex", "Anal", "Blowjob", "Titfuck", "Face Sit", "Footjob", "Breast Smother", "Slimed 100%", "Slimed 50%", "Slimed", "Tailjob"];
+    public static readonly DefaultStances: string[] = ["Empty", "Any", "Making Out", "Sex", "Anal", "Blowjob", "Titfuck", "Face Sit", "Footjob", "Breast Smother", "Slimed 100%", "Slimed 50%", "Slimed", "Tailjob"];
     public static readonly DefaultStatusEffects: string[] = ["None", "Restrain", "Sleep", "Charm"]
-    public static readonly DefaultFetishTags: string[] = ["", "Breasts", "Ass", "HypnosisAddict", "Sex", "Monstrous", "Cock", "Kissing", "Feet", "Penetration"]
+    public static readonly DefaultSkillType: string[] = ["attack", "statusEffect", "Healing", "HealingEP", "Escape"]
+    public static readonly DefaultSkillTags: string[] = ["Empty", "displayPain", "displayMagic", "displaySeduction", "displayMouth", "displayBreasts", "displayAss", "displayPenetration"];
+    public static readonly DefaultFetishTags: string[] = ["Empty", "Breasts", "Ass", "HypnosisAddict", "Sex", "Monstrous", "Cock", "Kissing", "Feet", "Penetration"]
 
     "name": Field<string> = new Field("", FieldType.Text, "Name", true);
     "cost": Field<string> = new Field("0", FieldType.Numeral, "Cost");
     "costType": Field<string> = new Field("ep", FieldType.Text, "Cost Type");
     "requiredLevel": Field<string> = new Field("0", FieldType.Numeral, "Required Level");
     "learningCost": Field<string> = new Field("0", FieldType.Numeral, "Learning Cost");
-    "skillType": Field<string> = new Field("attack", FieldType.Text, "Skill Type");
+    "skillType": Field<string> = new Field("", FieldType.Array, "Skill Type", true, Skill.DefaultSkillType);
     "statType": Field<string> = new Field("", FieldType.Text, "Stat Type");
     "requiredStat": Field<string> = new Field("0", FieldType.Numeral, "Required Stat");
-    "skillTags": Field<string[]> = new Field("", FieldType.Array, "Skill Tags", false, ["", "displayPain", "displayMagic", "displaySeduction", "displayMouth", "displayBreasts", "displayAss", "displayPenetration"]);
+    "skillTags": Field<string[]> = new Field("", FieldType.Array, "Skill Tags", false, Skill.DefaultSkillTags);
     "fetishTags": Field<string[]> = new Field("", FieldType.Array, "Fetish Tags", false, Skill.DefaultFetishTags);
     "startsStance": Field<string> = new Field("", FieldType.Text, "Starts Stance");
     "requiresStance": Field<string> = new Field("", FieldType.Text, "Requires Stance");

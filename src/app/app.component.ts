@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Skill } from './models/skill';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { FieldType } from './enums/fieldType';
+import { SelectItem } from 'primeng/components/common/selectitem';
 
 @Component({
   selector: 'app-root',
@@ -18,11 +19,14 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
 
     var controls = {};
-    this.skillKeys.forEach(k => controls[k] =
-      this.skillModel[k].required
-        ? new FormControl(this.skillModel[k].value, Validators.required)
-        : new FormControl(this.skillModel[k].value)
-    );
+    this.skillKeys.forEach(k => {
+
+      var value = this.skillModel[k].value
+
+      controls[k] = this.skillModel[k].required
+        ? new FormControl(value, Validators.required)
+        : new FormControl(value)
+    });
     this.skillForm = new FormGroup(controls);
 
   }
@@ -34,7 +38,11 @@ export class AppComponent implements OnInit {
       var a = document.createElement("a"),
         url = URL.createObjectURL(file);
       a.href = url;
-      a.download = this.skillForm.value['name'].replace(/ /g, '');
+      a.download = this.skillForm.value['name']
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ')
+        .replace(/ /g, '');
       document.body.appendChild(a);
       a.click();
 

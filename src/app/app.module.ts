@@ -12,6 +12,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
 import { SpinnerModule } from 'primeng/spinner';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
     InputTextModule,
     TabViewModule,
     SpinnerModule,
-    MultiSelectModule
+    MultiSelectModule,
+    InputTextareaModule,
+    ScrollPanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]
