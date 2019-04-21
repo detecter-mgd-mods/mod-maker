@@ -1,5 +1,6 @@
 export enum FieldType{
     Text,
     Numeral,
-    Array
+    Dropdown,
+    Multiselect
 }

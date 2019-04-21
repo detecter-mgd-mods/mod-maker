@@ -11,18 +11,45 @@
                 <label [for]="key">{{skillModel[key].label}}</label>
               </div>
 
-              <div class="p-col-4">
+              <div class="p-sm-10 p-md-10 p-lg-4 p-xl-4">
 
-                <textarea class="width-500" *ngIf="skillModel[key].type === FieldType.Text" [rows]="5" [cols]="30"
-                  pInputTextarea autoResize="autoResize" [formControlName]="key"></textarea>
+                <div class="ui-g ui-fluid ui-inputgroup" (mouseenter)="displayInputAddons(helpAddon)"
+                  (mouseleave)="hideInputAddons(helpAddon)">
+                  <textarea class="width-500" *ngIf="skillModel[key].type === FieldType.Text" [rows]="5" [cols]="30"
+                    pInputTextarea autoResize="autoResize" [formControlName]="key"></textarea>
 
-                <p-spinner class="width-300" *ngIf="skillModel[key].type === FieldType.Numeral" [formControlName]="key">
-                </p-spinner>
+                  <p-spinner class="width-300" *ngIf="skillModel[key].type === FieldType.Numeral"
+                    [formControlName]="key">
+                  </p-spinner>
 
-                <p-multiSelect class="width-500" *ngIf="skillModel[key].type === FieldType.Array"
-                  [options]="skillModel[key].options" [filter]="false" [readonly]="false" maxSelectedLabels="999"
-                  [formControlName]="key">
-                </p-multiSelect>
+                  <p-dropdown class="width-300" *ngIf="skillModel[key].type === FieldType.Dropdown"
+                    [options]="skillModel[key].options" [formControlName]="key"></p-dropdown>
+
+                  <p-multiSelect class="width-500" *ngIf="skillModel[key].type === FieldType.Multiselect"
+                    [options]="skillModel[key].options" [filter]="false" maxSelectedLabels="999" [formControlName]="key"
+                    [panelStyle]="{minWidth:'12em'}">
+
+                    <ng-template let-value pTemplate="selectedItems">
+                      <div *ngFor="let val of value" class="ui-multiselected-item-token ui-corner-all">
+                        <span>{{val.length > 0 ? val : 'Empty'}}</span>
+                      </div>
+                      <span *ngIf="!value || value.length === 0"
+                        class="ui-multiselected-empty-token ui-corner-all">Choose</span>
+                    </ng-template>
+
+                    <ng-template let-item pTemplate="item">
+                      <div style="font-size:14px;float:right;margin-top:4px">{{item.label}}</div>
+                    </ng-template>
+
+                  </p-multiSelect>
+
+                  <span #helpAddon class="ui-inputgroup-addon" style="visibility: hidden"
+                    (click)="toggleInfo(key, op, $event)"><i class="fa fa-question-circle"></i></span>
+                  <p-overlayPanel #op [style]="{width: '300px'}">
+                    {{skillModel[key].help}}
+                  </p-overlayPanel>
+
+                </div>
 
               </div>
 

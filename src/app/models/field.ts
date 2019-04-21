@@ -7,14 +7,16 @@ export class Field<T>{
     value: any;
     type: FieldType;
     label: string;
+    help: string;
     required?: boolean;
     options?: SelectItem[]
 
 
-    constructor(value: any, type: FieldType, label: string, required: boolean = false, options: string[] = []) {
+    constructor(value: any, type: FieldType, label: string, help: string = "No information", required: boolean = false, options: string[] = []) {
         this.value = value;
         this.type = type;
         this.label = label;
+        this.help = help;
         this.required = required;
         this.options = [];
         if (options.length > 0) {

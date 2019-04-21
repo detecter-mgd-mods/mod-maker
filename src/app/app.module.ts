@@ -11,9 +11,11 @@ import { AppComponent } from './app.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
 import { SpinnerModule } from 'primeng/spinner';
+import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [
@@ -28,9 +30,11 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     InputTextModule,
     TabViewModule,
     SpinnerModule,
+    DropdownModule,
     MultiSelectModule,
     InputTextareaModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    OverlayPanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]

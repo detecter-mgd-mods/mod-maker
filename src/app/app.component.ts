@@ -12,6 +12,7 @@ import { SelectItem } from 'primeng/components/common/selectitem';
 export class AppComponent implements OnInit {
 
   public FieldType = FieldType;
+
   public skillForm: FormGroup;
   public readonly skillModel: Skill = new Skill()
   public readonly skillKeys: string[] = Object.keys(this.skillModel);
@@ -56,21 +57,33 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public getFormValidationErrors() {
+  public getFormValidationErrors(): void {
 
-    Object.keys(this.skillForm.controls).forEach(key => {
+    for (let key of Object.keys(this.skillForm.controls)) {
 
       const controlErrors: ValidationErrors = this.skillForm.get(key).errors;
       if (controlErrors != null) {
 
-        Object.keys(controlErrors).forEach(keyError => {
+        for (let keyError of Object.keys(controlErrors)) {
           alert("The property " + "'" + key + "'" + ' is ' + keyError);
           return;
-        });
+        }
 
       }
-    });
+    }
 
+  }
+
+  public displayInputAddons(addon): void {
+    addon.style.visibility = "visible";
+  }
+
+  public hideInputAddons(addon): void {
+    addon.style.visibility = "hidden";
+  }
+
+  public toggleInfo(key: string, op: any, $event: any): void {
+    op.toggle($event)
   }
 
   public isRequired(key: string): boolean {
