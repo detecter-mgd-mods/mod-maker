@@ -18,7 +18,7 @@ export class Skill {
     "learningCost": Field<string> = new Field("0", FieldType.Numeral, "Learning Cost", "Eros cost of skill");
     "skillType": Field<string> = new Field("attack", FieldType.Dropdown, "Skill Type", "What kind of skill is it", true, Skill.DefaultSkillType);
     "statType": Field<string> = new Field("Empty", FieldType.Dropdown, "Stat Type", "What stat does it scale off of", true, Skill.DefaultStatType);
-    "requiredStat": Field<string> = new Field("0", FieldType.Numeral, "Amount of stat required to learn");
+    "requiredStat": Field<string> = new Field("0", FieldType.Numeral, "Required Stat", "Amount of stat required to learn");
     "skillTags": Field<string[]> = new Field([""], FieldType.Multiselect, "Skill Tags", "What locations it hits, can hit multiple", false, Skill.DefaultSkillTags);
     "fetishTags": Field<string[]> = new Field([""], FieldType.Multiselect, "Fetish Tags", "What fetishes it hits, can be more than one", false, Skill.DefaultFetishTags);
     "startsStance": Field<string> = new Field("", FieldType.Dropdown, "Starts Stance", "What stance it starts if any", false, Skill.DefaultStances);
