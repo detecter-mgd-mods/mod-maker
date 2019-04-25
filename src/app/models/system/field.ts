@@ -1,8 +1,8 @@
-import { FieldType } from '../enums/fieldType';
+import { FieldType } from '../../enums/fieldType';
 import { SelectItem } from 'primeng/components/common/selectitem';
-import { PropertyType } from '../enums/propertyType';
-import { Option } from './system/option';
-import { VirtualDatabase } from './system/virtualDatabase';
+import { PropertyType } from '../../enums/propertyType';
+import { Option } from './option';
+import { VirtualDatabase } from './virtualDatabase';
 
 export class Field<T>{
 

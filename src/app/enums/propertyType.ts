@@ -5,6 +5,10 @@ export enum PropertyType {
     Stance,
     StatusEffect,
     Skill,
+    SkillType,
     SkillTag,
-    FetishTag
+    FetishTag,
+    Boolean,
+    MonsterRequires,
+    MonsterPerk
 }

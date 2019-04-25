@@ -1,4 +1,4 @@
-import { Field } from './field';
+import { Field } from './system/field';
 import { FieldType } from '../enums/fieldType';
 import { PropertyType } from '../enums/propertyType';
 import { VirtualDatabase } from './system/virtualDatabase';
@@ -10,7 +10,7 @@ export class Skill {
     "costType": Field<string> = new Field("ep", FieldType.Dropdown, "Cost Type", "The resource it uses", true, PropertyType.Cost);
     "requiredLevel": Field<string> = new Field("0", FieldType.Numeral, "Required Level", "Level required to learn the skill");
     "learningCost": Field<string> = new Field("0", FieldType.Numeral, "Learning Cost", "Eros cost of skill");
-    "skillType": Field<string> = new Field("attack", FieldType.Dropdown, "Skill Type", "What kind of skill is it", true, PropertyType.Skill);
+    "skillType": Field<string> = new Field("attack", FieldType.Dropdown, "Skill Type", "What kind of skill is it", true, PropertyType.SkillType);
     "statType": Field<string> = new Field("Empty", FieldType.Dropdown, "Stat Type", "What stat does it scale off of", true, PropertyType.Stat);
     "requiredStat": Field<string> = new Field("0", FieldType.Numeral, "Required Stat", "Amount of stat required to learn");
     "skillTags": Field<string[]> = new Field([""], FieldType.Multiselect, "Skill Tags", "What locations it hits, can hit multiple", false, PropertyType.SkillTag);

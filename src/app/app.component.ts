@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
 
     var controls = {};
+    
     this.skillKeys.forEach(k => {
 
       var value = this.skillModel[k].initialValue
@@ -39,7 +40,9 @@ export class AppComponent implements OnInit {
       controls[k] = this.skillModel[k].required
         ? new FormControl(value, Validators.required)
         : new FormControl(value)
+
     });
+
     this.skillForm = new FormGroup(controls);
 
   }
