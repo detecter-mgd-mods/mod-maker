@@ -2,8 +2,12 @@ import { Field } from './system/field';
 import { FieldType } from '../enums/fieldType';
 import { PropertyType } from '../enums/propertyType';
 import { VirtualDatabase } from './system/virtualDatabase';
+import { IForm } from '../interfaces/iform';
+import { FormGroup } from '@angular/forms';
 
-export class Skill {
+export class Skill implements IForm {
+
+    form: FormGroup;
 
     "name": Field<string> = new Field("", FieldType.Text, "Name", "Name of the skill", true);
     "cost": Field<string> = new Field("0", FieldType.Numeral, "Cost", "How much it will take of a resource to use");

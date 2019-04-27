@@ -1,98 +1,67 @@
 <div class="p-grid">
-  <div class="p-col-12">
-    <p-tabView>
-      <p-tabPanel header="Skill">
 
-        <div class="p-grid">
-          <form class="form-inline" [formGroup]="skillForm" (ngSubmit)="onSubmit()">
-            <ng-container *ngFor="let key of skillKeys">
+  <div class="p-col-2 header">
+    <h3>MGD Mod Maker</h3>
+  </div>
+  <div class="p-col-10 header">
 
-              <div class="p-col-2">
-                <label [for]="key">{{skillModel[key].label}}</label>
-              </div>
+  </div>
 
-              <div class="p-sm-10 p-md-10 p-lg-4 p-xl-4">
+  <div class="p-col-2">
 
-                <div class="ui-g ui-fluid ui-inputgroup" (mouseenter)="displayInputAddons([helpAddon, editAddon], key)"
-                  (mouseleave)="hideInputAddons([helpAddon, editAddon], key)">
-                  <textarea class="width-500" *ngIf="skillModel[key].type === FieldType.Text" [rows]="5" [cols]="30"
-                    pInputTextarea autoResize="autoResize" [formControlName]="key"></textarea>
+    <div class="p-grid">
 
-                  <p-spinner class="width-300" *ngIf="skillModel[key].type === FieldType.Numeral"
-                    [formControlName]="key">
-                  </p-spinner>
+      <div class="p-col tree-button-container">
+        <button type="button" icon="fa fa-plus" class="margin-left-20" label="Add" (click)="showDialog()"
+          pButton></button>
+      </div>
 
-                  <p-dropdown class="width-300" *ngIf="skillModel[key].type === FieldType.Dropdown"
-                    [options]="skillModel[key].selectItems" [formControlName]="key"></p-dropdown>
+      <div class="p-col-12">
+        <p-tree [value]="mod.files" selectionMode="single" (onNodeSelect)="fileSelected($event)"></p-tree>
+      </div>
 
-                  <p-multiSelect class="width-500" *ngIf="skillModel[key].type === FieldType.Multiselect"
-                    [options]="skillModel[key].selectItems" [filter]="false" maxSelectedLabels="999"
-                    [formControlName]="key" [panelStyle]="{minWidth:'12em'}">
+    </div>
 
-                    <ng-template let-selectedOptions pTemplate="selectedItems">
-                      <div *ngFor="let selectedOption of selectedOptions" class="ui-multiselected-item-token ui-corner-all">
-                        <span>{{selectedOption.label && selectedOption.label.length > 0 ? selectedOption.label : "Empty"}}</span>
-                      </div>
-                      <span *ngIf="!selectedOptions || selectedOptions.length === 0"
-                        class="ui-multiselected-empty-token ui-corner-all">Choose</span>
-                    </ng-template>
+  </div>
 
-                    <ng-template let-item pTemplate="item">
-                      <div style="font-size:14px;float:right;margin-top:4px">{{item.label}}</div>
-                    </ng-template>
+  <div class="p-col-10">
+    <p-tabView (onClose)="closeTab($event)">
 
-                  </p-multiSelect>
-
-                  <span #editAddon class="ui-inputgroup-addon edit" style="visibility: hidden"
-                    (click)="showDialog(key)"><i class="fa fa-wrench"></i></span>
-                  <span #helpAddon class="ui-inputgroup-addon help" style="visibility: hidden"
-                    (click)="toggleInfo(key, op, $event)"><i class="fa fa-question-circle"></i></span>
-
-                  <p-overlayPanel #op [style]="{width: '300px'}">
-                    {{skillModel[key].help}}
-                  </p-overlayPanel>
-
-                </div>
-
-              </div>
-
-            </ng-container>
-
-            <p-dialog [header]="displayTitle" [(visible)]="display" [contentStyle]="{'width':'500px'}" modal="true" (onHide)="saveOptions()">
-              
-              <p-listbox [options]="displayOptions" [(ngModel)]="displaySelectedOptions"
-                [listStyle]="{'max-height':'300px'}" [ngModelOptions]="{standalone: true}" multiple="multiple"
-                checkbox="checkbox" showToggleAll="false" (onClick)="checkOption($event)">
-              </p-listbox>
-
-              <p-footer style="text-align: center">
-                  <input type="text" pInputText [(ngModel)]="displayInput" [ngModelOptions]="{standalone: true}"/>
-                  <button type="button" style="margin-left:20px" label="Add" (click)="addOption()" pButton></button>
-              </p-footer>
-
-            </p-dialog>
-
-            <div class="p-col-12">
-              <div class="p-grid p-justify-center">
-                <div class="p-col-2">
-                  <button type="submit" class="btn btn-primary width-200">Submit</button>
-                </div>
-              </div>
-            </div>
-
-          </form>
-        </div>
-
-      </p-tabPanel>
-
-      <p-tabPanel header="Monster">
-
-        To be developed...
-
-      </p-tabPanel>
+      <ng-container *ngFor="let tab of openTabs;let i = index">
+        <p-tabPanel [header]="tab.header" [selected]="i == 0" [closable]="true" >
+          <regular-form [formModel]="tab.file.data"></regular-form>
+        </p-tabPanel>
+      </ng-container>
 
     </p-tabView>
   </div>
+
 </div>
+
+<p-dialog header="New File" [(visible)]="display" [contentStyle]="{'width':'500px', 'min-height':'150px'}" modal="true">
+
+  <div class="p-grid">
+
+    <div class="p-col-2">
+      <label>Type:
+      </label>
+    </div>
+    <div class="p-col-10">
+      <p-dropdown #fdd class="w-auto" [options]="newFileOptions"></p-dropdown>
+    </div>
+    <div class="p-col-2">
+      <label>Name:
+      </label>
+    </div>
+    <div class="p-col-10">
+      <input type="text" class="w-auto" pInputText [(ngModel)]="newFileName" />
+    </div>
+
+  </div>
+
+  <p-footer>
+    <button type="button" class="margin-left-20" label="Create" (click)="createFile(fdd)" pButton></button>
+  </p-footer>
+</p-dialog>
 
 <router-outlet></router-outlet>

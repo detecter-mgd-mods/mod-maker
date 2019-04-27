@@ -1,40 +1,19 @@
-:host ::ng-deep .ui-multiselected-item-token,
-:host ::ng-deep .ui-multiselected-empty-token {
-    padding: 2px 4px;
-    margin: 0 0.286em 0 0;
-    display: inline-block;
-    vertical-align:middle;
-    height: 1.857em;
+@import "../styles.css";
+
+:host ::ng-deep .ui-tabview-panel{
+    border-width: 1px;
 }
 
-:host ::ng-deep .ui-multiselected-item-token {
-    background: #007ad9;
-    color: #ffffff;
+.tree-button-container{
+    padding-top:1em !important;
 }
 
-:host ::ng-deep .ui-multiselected-empty-token {
-    background: #d95f00;
-    color: #ffffff;
-}
-
-:host ::ng-deep .ui-listbox{
-    width: auto; }
-    :host ::ng-deep .ui-listbox-header{
-        display:none;
+.header{
+    background-color: #555555;
+    text-align: center;
+    }
+    .header h3{
+        color:white;
+        margin-top:0.5em;
     }
 
-:host ::ng-deep .ui-dialog-footer{
-    text-align: center;
-}
-
-.help{
-    background-color:#17a2b8;
-    color: white;
-    cursor: pointer;
-}
-
-.edit{
-    background-color:#34A835;
-    color: white;
-    cursor: pointer;
-}

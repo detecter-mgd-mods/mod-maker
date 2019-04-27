@@ -1,0 +1,81 @@
+<div class="p-grid" >
+    <form class="form-inline" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ng-container *ngFor="let key of formKeys">
+
+            <div class="p-col-2">
+                <label [for]="key">{{formModel[key].label}}</label>
+            </div>
+
+            <div class="p-sm-10 p-md-10 p-lg-4 p-xl-4">
+
+                <div class="ui-g ui-fluid ui-inputgroup" (mouseenter)="displayInputAddons([helpAddon, editAddon], key)"
+                    (mouseleave)="hideInputAddons([helpAddon, editAddon], key)">
+                    <textarea class="w-75" *ngIf="formModel[key].type === FieldType.Text" [rows]="5" [cols]="30"
+                        pInputTextarea autoResize="autoResize" [formControlName]="key"></textarea>
+
+                    <p-spinner class="w-75" *ngIf="formModel[key].type === FieldType.Numeral"
+                        [formControlName]="key">
+                    </p-spinner>
+
+                    <p-dropdown class="w-75" *ngIf="formModel[key].type === FieldType.Dropdown"
+                        [options]="formModel[key].selectItems" [formControlName]="key"></p-dropdown>
+
+                    <p-multiSelect class="w-75" *ngIf="formModel[key].type === FieldType.Multiselect"
+                        [options]="formModel[key].selectItems" [filter]="false" maxSelectedLabels="999"
+                        [formControlName]="key" [panelStyle]="{minWidth:'12em'}">
+
+                        <ng-template let-selectedOptions pTemplate="selectedItems">
+                            <div *ngFor="let selectedOption of selectedOptions"
+                                class="ui-multiselected-item-token ui-corner-all">
+                                <span>{{selectedOption.label && selectedOption.label.length > 0 ? selectedOption.label : "Empty"}}</span>
+                            </div>
+                            <span *ngIf="!selectedOptions || selectedOptions.length === 0"
+                                class="ui-multiselected-empty-token ui-corner-all">Choose</span>
+                        </ng-template>
+
+                        <ng-template let-item pTemplate="item">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{item.label}}</div>
+                        </ng-template>
+
+                    </p-multiSelect>
+
+                    <span #editAddon class="ui-inputgroup-addon edit" style="visibility: hidden"
+                        (click)="showDialog(key)"><i class="fa fa-wrench"></i></span>
+                    <span #helpAddon class="ui-inputgroup-addon help" style="visibility: hidden"
+                        (click)="toggleInfo(key, op, $event)"><i class="fa fa-question-circle"></i></span>
+
+                    <p-overlayPanel #op [style]="{width: '300px'}">
+                        {{formModel[key].help}}
+                    </p-overlayPanel>
+
+                </div>
+
+            </div>
+
+        </ng-container>
+
+        <p-dialog [header]="displayTitle" [(visible)]="display" [contentStyle]="{'width':'500px'}" modal="true"
+            (onHide)="saveOptions()">
+
+            <p-listbox [options]="displayOptions" [(ngModel)]="displaySelectedOptions"
+                [listStyle]="{'max-height':'300px'}" [ngModelOptions]="{standalone: true}" multiple="multiple"
+                checkbox="checkbox" showToggleAll="false" (onClick)="checkOption($event)">
+            </p-listbox>
+
+            <p-footer style="text-align: center">
+                <input type="text" pInputText [(ngModel)]="displayInput" [ngModelOptions]="{standalone: true}" />
+                <button type="button" class="margin-left-20" label="Add" (click)="addOption()" pButton></button>
+            </p-footer>
+
+        </p-dialog>
+
+        <div class="p-col-12">
+            <div class="p-grid p-justify-center">
+                <div class="p-col-2">
+                    <button type="submit" class="btn btn-primary width-200">Submit</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

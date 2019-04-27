@@ -1,8 +1,11 @@
 import { FieldType } from '../enums/fieldType';
 import { Field } from './system/field';
 import { PropertyType } from '../enums/propertyType';
+import { IForm } from '../interfaces/iform';
+import { FormGroup } from '@angular/forms';
 
-export class Monster {
+export class Monster implements IForm {
+    form: FormGroup;
 
     "name": Field<string> = new Field("", FieldType.Text, "Name", "Is displayed name", true);
     "IDname": Field<string> = new Field("", FieldType.Text, "ID Name", "Is used to find the monster in events or exploring locations", true);

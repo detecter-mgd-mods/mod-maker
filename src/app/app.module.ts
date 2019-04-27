@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { RegularFormComponent } from './components/regular-form/regular-form.component';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,10 +20,12 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DialogModule } from 'primeng/dialog';
 import { ListboxModule } from 'primeng/listbox';
+import { TreeModule } from 'primeng/tree';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RegularFormComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { ListboxModule } from 'primeng/listbox';
     ScrollPanelModule,
     OverlayPanelModule,
     DialogModule,
-    ListboxModule
+    ListboxModule,
+    TreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
