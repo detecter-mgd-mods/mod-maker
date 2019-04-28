@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Skill } from './models/skill';
-import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
-import { FieldType } from './enums/fieldType';
 import { SelectItem } from 'primeng/components/common/selectitem';
-import { PropertyType } from './enums/propertyType';
-import { TypeScriptEmitter } from '@angular/compiler';
-import { Option } from './models/system/option';
-import { VirtualDatabase } from './models/system/virtualDatabase';
 import { TreeNode } from 'primeng/components/common/treenode';
 import { Mod } from './models/mod';
 import { Dropdown } from 'primeng/dropdown';
 import { Tab } from './models/ui/tab';
-
+import * as JSZip from 'jszip';
 
 @Component({
   selector: 'app-root',
@@ -27,20 +21,21 @@ export class AppComponent implements OnInit {
   public mod: Mod = new Mod("New Mod");
   public skillModel = new Skill();
 
-  public display: boolean = false;
+  public addDisplay: boolean = false;
   public newFileName: string = '';
+
+  public deleteDisplay: boolean = false;
+  public fileOptions: SelectItem[] = [];
+  public selectedFileOptions: any[] = [];
 
   public openTabs: Tab[] = [];
 
   public ngOnInit(): void {
-
-
-
   }
 
-  public showDialog(): void {
+  public showAddDialog(): void {
 
-    this.display = true;
+    this.addDisplay = true;
     this.newFileName = '';
 
   }
@@ -51,6 +46,11 @@ export class AppComponent implements OnInit {
     var fileName = this.newFileName.includes(".json")
       ? this.newFileName
       : this.newFileName + ".json";
+    fileName = fileName.split(' ')
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(' ')
+      .replace(/ /g, '')
+
 
     if (this.mod.filesLabels.includes(fileName)) return;
 
@@ -70,11 +70,79 @@ export class AppComponent implements OnInit {
         } as TreeNode;
 
         skillsFolder.children.push(newFile);
-        this.openTabs = this.openTabs.concat(new Tab(newFile.label, newFile));
+        this.openTabs = this.openTabs.concat(new Tab(newFile.type + ": " + newFile.label, newFile));
 
         break;
     }
-    this.display = false;
+    this.addDisplay = false;
+  }
+
+  public showDeleteDialog(): void {
+
+    this.deleteDisplay = true;
+    this.fileOptions = [];
+
+    for (let file of this.mod.files) {
+
+      this.fileOptions = this.fileOptions.concat(this.getFilesInChildren(file));
+
+    }
+
+  }
+
+  public deleteFiles(event): void {
+
+    let files = event.value;
+    if (files && files.length > 0) {
+
+      var labels = files.map(f => f.label);
+      this.mod.files = this.deleteFilesInChildren(this.mod.files, labels);
+      this.mod.filesLabels = this.mod.filesLabels.filter(fl => labels.includes(fl) === false);
+      this.openTabs = this.openTabs.filter(ot => labels.includes(ot.file.label) === false);
+    }
+
+    this.deleteDisplay = false;
+  }
+
+  public deleteFilesInChildren(files, toDelete: string[]) {
+
+    let result = [];
+    for (let file of files) {
+
+      if (file.children && file.children.length > 0) {
+        file.children = this.deleteFilesInChildren(file.children, toDelete);
+        result.push(file)
+      }
+      else if (toDelete.includes(file.label) === false) {
+        result.push(file)
+      }
+
+    }
+
+    return result;
+
+  }
+
+  public getFilesInChildren(file): any[] {
+
+    let result = [];
+    let children = file.children;
+
+    if (!children || children.length === 0) return result;
+    for (let child of children) {
+
+      if (child.label.includes(".json")) {
+
+        result.push({ label: child.label, value: child });
+      }
+
+      let store = this.getFilesInChildren(child);
+      if (store && store.length > 0) {
+        result = result.concat(store);
+      }
+    }
+
+    return result;
   }
 
   public fileSelected(event): void {
@@ -83,7 +151,7 @@ export class AppComponent implements OnInit {
     if (!file.type) return;
     if (this.openTabs.map(t => t.header).includes(file.label)) return;
 
-    this.openTabs = this.openTabs.concat(new Tab(file.label, file));
+    this.openTabs = this.openTabs.concat(new Tab(file.type + ": " + file.label, file));
   }
 
   public closeTab(event): void {

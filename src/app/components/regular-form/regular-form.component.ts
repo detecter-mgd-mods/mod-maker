@@ -32,22 +32,27 @@ export class RegularFormComponent implements OnInit {
     public ngOnInit(): void {
 
         var controls = {};
-
-        this.formKeys = [];
         this.formKeys = Object.keys(this.formModel);
 
-        this.formKeys.forEach(k => {
+        if (!this.formModel.form) {
 
-            var value = this.formModel[k].initialValue
+            this.formKeys.forEach(k => {
 
-            controls[k] = this.formModel[k].required
-                ? new FormControl(value, Validators.required)
-                : new FormControl(value)
+                var value = this.formModel[k].initialValue
 
-        });
+                controls[k] = this.formModel[k].required
+                    ? new FormControl(value, Validators.required)
+                    : new FormControl(value)
 
-        this.form = new FormGroup(controls);
-        this.formModel.form = this.form;
+            });
+
+            this.form = new FormGroup(controls);
+            this.formModel.form = this.form;
+        }
+        else {
+            this.form = this.formModel.form;
+        }
+
     }
 
     public onSubmit() {

@@ -1,7 +1,7 @@
 <div class="p-grid">
 
   <div class="p-col-2 header">
-    <h3>MGD Mod Maker</h3>
+    <h4>MGD Mod Maker</h4>
   </div>
   <div class="p-col-10 header">
 
@@ -12,12 +12,15 @@
     <div class="p-grid">
 
       <div class="p-col tree-button-container">
-        <button type="button" icon="fa fa-plus" class="margin-left-20" label="Add" (click)="showDialog()"
+        <button type="button" icon="fa fa-plus" class="margin-left-20" label="Add" (click)="showAddDialog()"
+          pButton></button>
+        <button type="button" icon="fa fa-minus" class="margin-left-20" label="Delete" (click)="showDeleteDialog()" [disabled]="mod.filesLabels.length === 0"
           pButton></button>
       </div>
 
       <div class="p-col-12">
-        <p-tree [value]="mod.files" selectionMode="single" (onNodeSelect)="fileSelected($event)"></p-tree>
+        <p-tree class="w-auto" [value]="mod.files" selectionMode="single" (onNodeSelect)="fileSelected($event)">
+        </p-tree>
       </div>
 
     </div>
@@ -25,10 +28,13 @@
   </div>
 
   <div class="p-col-10">
-    <p-tabView (onClose)="closeTab($event)">
+    <div style="margin-top:25%;margin-left:25%" *ngIf="!openTabs || openTabs.length === 0">
+      <h5>You have no mod file open, click on a mod file from the left view or create one</h5>
+    </div>
+    <p-tabView *ngIf="openTabs && openTabs.length > 0" (onClose)="closeTab($event)">
 
       <ng-container *ngFor="let tab of openTabs;let i = index">
-        <p-tabPanel [header]="tab.header" [selected]="i == 0" [closable]="true" >
+        <p-tabPanel [header]="tab.header" [selected]="i == 0" [closable]="true">
           <regular-form [formModel]="tab.file.data"></regular-form>
         </p-tabPanel>
       </ng-container>
@@ -38,7 +44,8 @@
 
 </div>
 
-<p-dialog header="New File" [(visible)]="display" [contentStyle]="{'width':'500px', 'min-height':'150px'}" modal="true">
+<p-dialog header="New File" [(visible)]="addDisplay" [contentStyle]="{'width':'500px', 'min-height':'150px'}"
+  modal="true">
 
   <div class="p-grid">
 
@@ -62,6 +69,28 @@
   <p-footer>
     <button type="button" class="margin-left-20" label="Create" (click)="createFile(fdd)" pButton></button>
   </p-footer>
+
+</p-dialog>
+
+<p-dialog header="Delete File" [(visible)]="deleteDisplay" [contentStyle]="{'width':'500px', 'min-height':'150px'}"
+  modal="true">
+
+  <div class="p-grid">
+
+    <div class="p-col-2">
+      <label>Files:
+      </label>
+    </div>
+    <div class="p-col-10">
+      <p-listbox #flb [options]="fileOptions" dataKey="label" [(ngModel)]="selectedFileOptions" multiple="multiple" checkbox="checkbox" filter="filter"></p-listbox>
+    </div>
+
+  </div>
+
+  <p-footer>
+    <button type="button" class="margin-left-20" label="Delete" (click)="deleteFiles(flb)" pButton></button>
+  </p-footer>
+
 </p-dialog>
 
 <router-outlet></router-outlet>
