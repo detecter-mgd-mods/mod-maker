@@ -27,20 +27,8 @@
     width: auto; }
     :host ::ng-deep .ui-listbox-header{
         display:none;
-    }
+}
 
 :host ::ng-deep .ui-dialog-footer{
     text-align: center;
-}
-
-.help{
-    background-color:#17a2b8;
-    color: white;
-    cursor: pointer;
-}
-
-.edit{
-    background-color:#34A835;
-    color: white;
-    cursor: pointer;
 }

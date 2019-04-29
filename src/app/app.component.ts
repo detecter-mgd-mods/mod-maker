@@ -6,6 +6,11 @@ import { Mod } from './models/mod';
 import { Dropdown } from 'primeng/dropdown';
 import { Tab } from './models/ui/tab';
 import * as JSZip from 'jszip';
+import * as fileSaver from 'file-saver';
+import { Field } from './models/system/field';
+import { FieldType } from './enums/fieldType';
+import { PropertyType } from './enums/propertyType';
+import { ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,23 +19,31 @@ import * as JSZip from 'jszip';
 })
 export class AppComponent implements OnInit {
 
-  public newFileOptions: SelectItem[] = [
-    { label: "Skill", value: "Skill" }
-  ];
-
   public mod: Mod = new Mod("New Mod");
   public skillModel = new Skill();
 
   public addDisplay: boolean = false;
   public newFileName: string = '';
+  public newFileOptions: SelectItem[] = [
+    { label: "Skill", value: "Skill" }
+  ];
+  public skillSubOptionsField: Field<string> = new Field<string>('Empty', FieldType.Dropdown, 'Subdirectory', null, false, PropertyType.SkillSubOption);
+
 
   public deleteDisplay: boolean = false;
   public fileOptions: SelectItem[] = [];
+  public selectedFileOption: string = '';
   public selectedFileOptions: any[] = [];
+  public selectedSubtype: any = {};
 
   public openTabs: Tab[] = [];
+  public isZippingSuccesful: boolean = true;
 
   public ngOnInit(): void {
+  }
+
+  public getSelectedSubType(event) {
+    this.selectedSubtype = event;
   }
 
   public showAddDialog(): void {
@@ -41,6 +54,7 @@ export class AppComponent implements OnInit {
   }
 
   public createFile(dropdown: Dropdown): void {
+
     var option: SelectItem = dropdown.selectedOption;
 
     var fileName = this.newFileName.includes(".json")
@@ -69,9 +83,28 @@ export class AppComponent implements OnInit {
           type: "Skill"
         } as TreeNode;
 
-        skillsFolder.children.push(newFile);
-        this.openTabs = this.openTabs.concat(new Tab(newFile.type + ": " + newFile.label, newFile));
+        if (this.selectedSubtype && this.selectedSubtype.id && this.selectedSubtype.id.length > 0 && this.selectedSubtype.id !== 'Empty') {
 
+          var folder = skillsFolder.children.find(f => f.label === this.selectedSubtype.id);
+          if (folder === undefined) {
+            skillsFolder.children.push({
+              "label": this.selectedSubtype.id,
+              "expandedIcon": "fa fa-folder-open",
+              "collapsedIcon": "fa fa-folder",
+              "children": [
+                newFile
+              ]
+            } as TreeNode)
+          }
+          else {
+            folder.children.push(newFile);
+          }
+        }
+        else {
+          skillsFolder.children.push(newFile);
+        }
+
+        this.openTabs = this.openTabs.concat(new Tab(newFile.type + ": " + newFile.label, newFile));
         break;
     }
     this.addDisplay = false;
@@ -149,13 +182,103 @@ export class AppComponent implements OnInit {
 
     var file = event.node;
     if (!file.type) return;
-    if (this.openTabs.map(t => t.header).includes(file.label)) return;
+    if (this.openTabs.map(t => t.file.label).includes(file.label)) return;
 
     this.openTabs = this.openTabs.concat(new Tab(file.type + ": " + file.label, file));
   }
 
   public closeTab(event): void {
     this.openTabs.splice(event.index);
+  }
+
+  public getField() {
+    return this.selectedFileOption === 'Skill' ? this.skillSubOptionsField : this.skillSubOptionsField;
+  }
+
+  public exportFiles() {
+    console.log("Exporting files...");
+
+    var zip = new JSZip();
+    let folder: string = '';
+    let isSuccesful = this.zipFiles(zip, folder, this.mod.files);
+
+    if (this.isZippingSuccesful) {
+
+      zip.generateAsync({ type: "blob" })
+        .then(content => {
+
+          fileSaver.saveAs(content, "example.zip");
+
+        });
+    }
+
+    this.isZippingSuccesful = true;
+
+  }
+
+  public zipFiles(zip: JSZip, folder, files) {
+
+    for (let file of files) {
+
+      if (file.label.includes(".json") === false) {
+
+        folder = folder === '' ? zip.folder(file.label) : folder.folder(file.label);
+
+        if (file.children && file.children.length > 0) {
+          this.zipFiles(zip, folder, file.children);
+        }
+
+      }
+      else {
+        if (file.data.form.valid) {
+          let formHolder = file.data.form;
+          delete file.data.form;
+          folder.file(file.label, JSON.stringify(this.convertToModJSON(formHolder.value), null, 2))
+        }
+        else {
+          if (this.isZippingSuccesful) {
+            this.getFormValidationErrors(file.data.form, file.label);
+            this.isZippingSuccesful = false;
+          }
+        }
+      }
+
+    }
+
+  }
+
+  public getFormValidationErrors(form, fileName): void {
+
+    for (let key of Object.keys(form.controls)) {
+
+      const controlErrors: ValidationErrors = form.get(key).errors;
+      if (controlErrors != null) {
+
+        for (let keyError of Object.keys(controlErrors)) {
+          alert("The property " + "'" + key + "'" + ' is ' + keyError + " in file " + "'" + fileName + "'");
+          return;
+        }
+
+      }
+    }
+
+  }
+
+  public convertToModJSON(data) {
+
+    let result = {};
+    let dataKeys = Object.keys(data);
+
+    for (let key of dataKeys) {
+      if (typeof data[key] === 'string')
+        result[key] = data[key];
+      else if (Array.isArray(data[key]))
+        result[key] = data[key].map(o => o.value);
+      else if (typeof data[key] === 'object')
+        result[key] = data[key].value;
+    }
+
+    return result;
   }
 
 }

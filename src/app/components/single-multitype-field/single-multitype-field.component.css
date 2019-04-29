@@ -1,0 +1,7 @@
+@import "../../../styles.css";
+
+:host ::ng-deep .ui-listbox{
+    width: auto; }
+    :host ::ng-deep .ui-listbox-header{
+        display:none;
+}

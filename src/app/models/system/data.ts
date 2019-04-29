@@ -9,6 +9,7 @@ export class Data {
         "Pinch Nipples", "Handjob", "Leg Grind", "Handjob", "Assjob", "Tailjob"]
     public static readonly DefaultSkillType: string[] = ["attack", "statusEffect", "Healing", "HealingEP", "HealingSP", "Escape"]
     public static readonly DefaultSkillTags: string[] = ["Empty", "displayPain", "displayMagic", "displaySeduction", "displayMouth", "displayBreasts", "displayAss", "displayPenetration"];
+    public static readonly DefaultSkillSubOptions: string[] = ["Empty", "Ass", "Breasts", "Feet", "Kiss", "Legs", "Magic", "Monstrous", "Oral", "Pain", "Seduction", "Sex", "StatusAfflicting", "StatusBuffing"];
     public static readonly DefaultFetishTags: string[] = ["Empty", "Breasts", "Ass", "HypnosisAddict", "Sex", "Monstrous", "Cock", "Kissing", "Feet", "Penetration"]
     public static readonly DefaultMonsterRequires: string[] = ["Empty", "Temple Checkpoint Gem", "Sigil of Allure", "True Sigil Of Power", "Sigil Of Will-Power", "Green Scale"]
     public static readonly DefaultMonsterPerks: string[] = ["Empty", "Undeniable Pleasure", "Semen Eater", "Semen Frenzy", "Energy Drainer", "No Anus", "No Pussy", "No Mouth", , "No Chest", "Sex Adverse", "Anal Adverse"]

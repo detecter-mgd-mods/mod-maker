@@ -30,3 +30,15 @@
 .margin-left-20{
     margin-left:20px !important;
 }
+
+.help{
+    background-color:#17a2b8;
+    color: white;
+    cursor: pointer;
+}
+
+.edit{
+    background-color:#34A835;
+    color: white;
+    cursor: pointer;
+}

@@ -5,6 +5,7 @@ export enum PropertyType {
     Stance,
     StatusEffect,
     Skill,
+    SkillSubOption,
     SkillType,
     SkillTag,
     FetishTag,

@@ -12,10 +12,18 @@
     <div class="p-grid">
 
       <div class="p-col tree-button-container">
-        <button type="button" icon="fa fa-plus" class="margin-left-20" label="Add" (click)="showAddDialog()"
-          pButton></button>
-        <button type="button" icon="fa fa-minus" class="margin-left-20" label="Delete" (click)="showDeleteDialog()" [disabled]="mod.filesLabels.length === 0"
-          pButton></button>
+        <div class="p-grid">
+          <div class="p-col">
+            <button type="button" icon="fa fa-plus" class="w-auto" label="Add" (click)="showAddDialog()"
+              pButton></button>
+          </div>
+          <div class="p-col"><button type="button" icon="fa fa-minus" class="w-auto" label="Delete"
+              (click)="showDeleteDialog()" [disabled]="mod.filesLabels.length === 0" pButton></button></div>
+          <div class="p-col"><button type="button" class="w-auto" label="Export"
+              (click)="exportFiles()" [disabled]="mod.filesLabels.length === 0" pButton></button></div>
+
+
+        </div>
       </div>
 
       <div class="p-col-12">
@@ -44,7 +52,7 @@
 
 </div>
 
-<p-dialog header="New File" [(visible)]="addDisplay" [contentStyle]="{'width':'500px', 'min-height':'150px'}"
+<p-dialog header="New File" [(visible)]="addDisplay" [contentStyle]="{'width':'500px', 'min-height':'350px'}"
   modal="true">
 
   <div class="p-grid">
@@ -54,7 +62,15 @@
       </label>
     </div>
     <div class="p-col-10">
-      <p-dropdown #fdd class="w-auto" [options]="newFileOptions"></p-dropdown>
+      <p-dropdown #fdd class="w-auto" [options]="newFileOptions" [(ngModel)]="selectedFileOption"></p-dropdown>
+    </div>
+    <div class="p-col-2">
+      <label>SubType:
+      </label>
+    </div>
+    <div class="p-col-10">
+      <single-multitype-field [field]="getField()" (selectedValueEvent)="getSelectedSubType($event)">
+      </single-multitype-field>
     </div>
     <div class="p-col-2">
       <label>Name:
@@ -82,7 +98,8 @@
       </label>
     </div>
     <div class="p-col-10">
-      <p-listbox #flb [options]="fileOptions" dataKey="label" [(ngModel)]="selectedFileOptions" multiple="multiple" checkbox="checkbox" filter="filter"></p-listbox>
+      <p-listbox #flb [options]="fileOptions" dataKey="label" [(ngModel)]="selectedFileOptions" multiple="multiple"
+        checkbox="checkbox" filter="filter"></p-listbox>
     </div>
 
   </div>

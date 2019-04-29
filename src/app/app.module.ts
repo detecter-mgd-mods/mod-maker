@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { RegularFormComponent } from './components/regular-form/regular-form.component';
+import { MultitypeFieldComponent } from './components/multitype-field/multitype-field.component';
+import { SingleMultitypeFieldComponent } from './components/single-multitype-field/single-multitype-field.component';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -25,7 +27,9 @@ import { TreeModule } from 'primeng/tree';
 @NgModule({
   declarations: [
     AppComponent,
-    RegularFormComponent
+    RegularFormComponent,
+    MultitypeFieldComponent,
+    SingleMultitypeFieldComponent
   ],
   imports: [
     BrowserModule,

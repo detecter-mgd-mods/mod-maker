@@ -16,7 +16,8 @@ export class VirtualDatabase {
         Data.DefaultBoolean.map(e => new Option(PropertyType.Boolean, e, e, true, true)),
         Data.DefaultMonsterRequires.map(e => new Option(PropertyType.MonsterRequires, e, e, true, true)),
         Data.DefaultSkill.map(e => new Option(PropertyType.Skill, e, e, true, true)),
-        Data.DefaultMonsterPerks.map(e => new Option(PropertyType.MonsterPerk, e, e, true, true))
+        Data.DefaultMonsterPerks.map(e => new Option(PropertyType.MonsterPerk, e, e, true, true)),
+        Data.DefaultSkillSubOptions.map(e => new Option(PropertyType.SkillSubOption, e, e, true, true))
     );
 
 }
