@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FieldType } from 'src/app/enums/fieldType';
 import { SelectItem } from 'primeng/components/common/selectitem';
 import { VirtualDatabase } from 'src/app/models/system/virtualDatabase';
@@ -29,6 +29,9 @@ export class MultitypeFieldComponent implements OnInit {
     public formGroup: FormGroup;
     @Input()
     public key: string;
+
+    @Output()
+    public dropdownEdited = new EventEmitter();
 
     ngOnInit(): void {
     }
@@ -94,18 +97,13 @@ export class MultitypeFieldComponent implements OnInit {
         if (!customOptions || customOptions.length === 0) return;
 
         for (let option of customOptions) {
-            VirtualDatabase.OptionRepository.EditRow(o => o.id === option.value.id, option.value, true);
+            VirtualDatabase.OptionRepository.EditRow(o => o && o.id && o.id === option.value.id, option.value, true);
         }
 
-        let formKeys = Object.keys(this.formModel);
+        
         //update dropdowns
-        for (let key of formKeys) {
-            if (this.formModel[key].type === FieldType.Dropdown || this.formModel[key].type === FieldType.Multiselect) {
-                this.formModel[key].selectItems = this.formModel[key].getSelectedItems(this.formModel[key].propertyType);
-            }
-        }
+        this.dropdownEdited.emit(true);
 
     }
-
 
 }

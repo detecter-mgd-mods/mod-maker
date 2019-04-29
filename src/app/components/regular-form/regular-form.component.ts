@@ -106,4 +106,14 @@ export class RegularFormComponent implements OnInit {
         return this.form.get(key).hasError('required') && this.form.get(key).touched;
     }
 
+    public updateDropdowns() {
+
+        let formKeys = Object.keys(this.formModel);
+        for (let key of formKeys) {
+            if (this.formModel[key].type === FieldType.Dropdown || this.formModel[key].type === FieldType.Multiselect) {
+                this.formModel[key].selectItems = this.formModel[key].getSelectedItems(this.formModel[key].propertyType);
+            }
+        }
+    }
+
 }

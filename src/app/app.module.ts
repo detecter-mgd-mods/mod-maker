@@ -11,6 +11,7 @@ import { MultitypeFieldComponent } from './components/multitype-field/multitype-
 import { SingleMultitypeFieldComponent } from './components/single-multitype-field/single-multitype-field.component';
 
 import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
 import { SpinnerModule } from 'primeng/spinner';
@@ -38,6 +39,7 @@ import { TreeModule } from 'primeng/tree';
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
+    CheckboxModule,
     InputTextModule,
     TabViewModule,
     SpinnerModule,

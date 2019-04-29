@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   public selectedFileOption: string = '';
   public selectedFileOptions: any[] = [];
   public selectedSubtype: any = {};
+  public isEnemySkill: boolean = true;
 
   public openTabs: Tab[] = [];
   public isZippingSuccesful: boolean = true;
@@ -92,13 +93,33 @@ export class AppComponent implements OnInit {
               "expandedIcon": "fa fa-folder-open",
               "collapsedIcon": "fa fa-folder",
               "children": [
-                newFile
+
               ]
-            } as TreeNode)
+            } as TreeNode);
+            folder = skillsFolder.children[0];
+          }
+
+          if (this.isEnemySkill && this.isEnemySkillDisabled() === false) {
+
+            var enemySkillFolder = folder.children.find(f => f.label === 'EnemySkills');
+            if (enemySkillFolder === undefined) {
+              folder.children.push({
+                "label": 'EnemySkills',
+                "expandedIcon": "fa fa-folder-open",
+                "collapsedIcon": "fa fa-folder",
+                "children": [
+                  newFile
+                ]
+              });
+            }
+            else {
+              enemySkillFolder.children.push(newFile);
+            }
           }
           else {
             folder.children.push(newFile);
           }
+
         }
         else {
           skillsFolder.children.push(newFile);
@@ -188,7 +209,7 @@ export class AppComponent implements OnInit {
   }
 
   public closeTab(event): void {
-    this.openTabs.splice(event.index);
+    this.openTabs.splice(event.index, 1);
   }
 
   public getField() {
@@ -196,20 +217,17 @@ export class AppComponent implements OnInit {
   }
 
   public exportFiles() {
-    console.log("Exporting files...");
 
     var zip = new JSZip();
     let folder: string = '';
-    let isSuccesful = this.zipFiles(zip, folder, this.mod.files);
+    this.zipFiles(zip, folder, this.mod.files);
 
     if (this.isZippingSuccesful) {
 
-      zip.generateAsync({ type: "blob" })
-        .then(content => {
+      zip.generateAsync({ type: "blob" }).then(content => {
+        fileSaver.saveAs(content, Date.now().toString());
+      });
 
-          fileSaver.saveAs(content, "example.zip");
-
-        });
     }
 
     this.isZippingSuccesful = true;
@@ -231,9 +249,7 @@ export class AppComponent implements OnInit {
       }
       else {
         if (file.data.form.valid) {
-          let formHolder = file.data.form;
-          delete file.data.form;
-          folder.file(file.label, JSON.stringify(this.convertToModJSON(formHolder.value), null, 2))
+          folder.file(file.label, JSON.stringify(this.convertToModJSON(file.data.form.value), null, 2))
         }
         else {
           if (this.isZippingSuccesful) {
@@ -279,6 +295,12 @@ export class AppComponent implements OnInit {
     }
 
     return result;
+  }
+
+  public isEnemySkillDisabled(): boolean {
+
+    return !this.selectedSubtype || !this.selectedSubtype.id || this.selectedSubtype.id.length === 0 || this.selectedSubtype.id === 'Empty';
+
   }
 
 }
