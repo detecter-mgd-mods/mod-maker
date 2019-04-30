@@ -4,7 +4,7 @@ import { PropertyType } from '../../enums/propertyType';
 import { Option } from './option';
 import { VirtualDatabase } from './virtualDatabase';
 
-export class Field<T>{
+export class Field{
 
     initialValue: any;
     type: FieldType;

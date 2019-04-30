@@ -1,5 +1,5 @@
 <div class="ui-g ui-fluid ui-inputgroup" (mouseenter)="displayInputAddons([helpAddon, editAddon], key)"
-    (mouseleave)="hideInputAddons([helpAddon, editAddon], key)" [formGroup]="formGroup">
+    (mouseleave)="hideInputAddons([helpAddon, editAddon])" [formGroup]="formGroup">
     <textarea class="w-75" *ngIf="formModel[key].type === FieldType.Text" [rows]="5" [cols]="30" pInputTextarea
         autoResize="autoResize" [formControlName]="key"></textarea>
 

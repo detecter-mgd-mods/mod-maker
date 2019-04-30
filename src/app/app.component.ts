@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   public newFileOptions: SelectItem[] = [
     { label: "Skill", value: "Skill" }
   ];
-  public skillSubOptionsField: Field<string> = new Field<string>('Empty', FieldType.Dropdown, 'Subdirectory', null, false, PropertyType.SkillSubOption);
+  public skillSubOptionsField: Field = new Field('Empty', FieldType.Dropdown, 'Subdirectory', null, false, PropertyType.SkillSubOption);
 
 
   public deleteDisplay: boolean = false;
@@ -225,7 +225,7 @@ export class AppComponent implements OnInit {
     if (this.isZippingSuccesful) {
 
       zip.generateAsync({ type: "blob" }).then(content => {
-        fileSaver.saveAs(content, Date.now().toString());
+        fileSaver.saveAs(content, Date.now().toString() + ".zip");
       });
 
     }
