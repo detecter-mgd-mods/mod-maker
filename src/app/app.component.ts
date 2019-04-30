@@ -56,6 +56,8 @@ export class AppComponent implements OnInit {
 
   public createFile(dropdown: Dropdown): void {
 
+    if(!this.newFileName || this.newFileName.length === 0) return;
+
     var option: SelectItem = dropdown.selectedOption;
 
     var fileName = this.newFileName.includes(".json")
